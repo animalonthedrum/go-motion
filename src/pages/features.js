@@ -7,7 +7,6 @@ export default class Features extends Component {
     return (
       <Layout>
         <h1>FEATURES</h1>
-
       </Layout>
     )
   }

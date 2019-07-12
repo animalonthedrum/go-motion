@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
+import Layout from "../components/layout"
 
 export default class MartialArts extends Component {
   render() {
     return (
-      <div>
+      <Layout>
         <h1>Martial Arts</h1>
-      </div>
+      </Layout>
     )
   }
 }

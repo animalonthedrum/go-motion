@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
+import Layout from "../components/layout"
 
 export default class OnlineRegistration extends Component {
   render() {
     return (
-      <div>
+      <Layout>
         <h1>Online Reg</h1>
-      </div>
+      </Layout>
     )
   }
 }

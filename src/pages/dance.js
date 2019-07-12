@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
-import DesktopNavigation from './dropdown';
+import Layout from "../components/layout"
 
 export default class Dance extends Component {
   render() {
     return (
-      <div>
-      <DesktopNavigation/>
+      <Layout>
         <h1>Dance</h1>
-      </div>
+      </Layout>
     )
   }
 }

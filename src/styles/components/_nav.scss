@@ -7,6 +7,9 @@ nav {
     height: 60px;
     align-items: center;
     background-color: color($se-purple);
+    @include gutter-small {
+        background-color: color($se-white);
+    }
     .brand {
         flex: 1;
         svg {
@@ -14,6 +17,9 @@ nav {
             max-height: 25px;
             .st1 {
                 fill:color($se-white);
+                @include gutter-small {
+                    fill: color($se-black);
+                }
             }
             .st0{
                 fill: color($se-yellow);
@@ -33,6 +39,9 @@ nav {
             padding-right: 0;
             padding-left: 30px;
             height: 100%;
+            @include gutter-small {
+            display: none;
+            }
         }
         &.dropdown-menu {
             background-color: color($se-white);

@@ -1,7 +1,6 @@
 import { Link } from "gatsby"
-import React, { Component, useState } from "react"
-import ReactDOM from "react-dom"
-import Dropdown from "../components/dropdown"
+import React from "react"
+import Dropdown from "./dropdown"
 
 
 function DesktopNavigation() {
