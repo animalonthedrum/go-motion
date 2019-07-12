@@ -1,0 +1,208 @@
+
+//FONT
+$se-font-family-gotham: "Gotham SSm A", "Gotham SSm B", "Arial", sans-serif;
+$se-font-family-forza: "Forza SSm A", "Forza SSm B", "Arial", sans-serif;
+$se-font-family-font-awesome: "FontAwesome";
+// $se-font-family-open-sans: "Open Sans", sans-serif;
+
+// FONT SIZES
+$se-font-size-200: .75rem;    // 12px
+$se-font-size-300: .875rem;   // 14px
+$se-font-size-400: 1rem;      // 16px
+$se-font-size-500: 1.125rem;  // 18px
+$se-font-size-600: 1.25rem;   // 20px
+$se-font-size-700: 1.5rem;    // 24px
+$se-font-size-800: 1.875rem;  // 30px
+$se-font-size-900: 2rem;      // 32px
+$se-font-size-1000: 2.125rem; // 34px
+$se-font-size-1100: 2.25rem;  // 36px
+$se-font-size-1200: 2.5rem;   // 40px
+$se-font-size-1300: 3rem;     // 48px
+
+$se-font-size-h1: 3.75rem;    // 60px
+$se-font-size-h2: 2.25rem;    // 36px
+$se-font-size-h3: 1.5rem;     // 24px
+$se-font-size-h4: 1.25rem;    // 20px
+$se-font-size-h5: 1rem;       // 16px
+$se-font-size-h6: 1rem;       // 16px
+
+$se-font-weight-light: 300;
+$se-font-weight-normal: 400;
+$se-font-weight-semi-bold: 500;
+$se-font-weight-bold: 700;
+
+$se-letter-spacing-400:  .1rem;
+$se-letter-spacing-500: 0.21875rem; // 3.5px
+$se-letter-spacing-600: 0.25rem;  // 4px
+
+// FONTAWESOME //
+$chevron-right: "\f054";
+$chevron-left: "\f053";
+$chevron-up: "\f078";
+$chevron-down: "\f077";
+$chevron-right-circle: "\f138";
+$checkmark: "\f00c";
+$checkmark-circle-fill: "\f058";
+$caret-down: "\f058";
+$close: "\f00d";
+
+html {
+  color: color($se-not-black);
+  font-family: $se-font-family-gotham;
+  font-size: $se-font-size-400;
+  font-weight: $se-font-weight-normal;
+}
+
+h1, blockquote {
+	font-family: $se-font-family-forza;
+}
+h2, h3, h4, h5, h6, p, a, ol, ul, li {
+	font-family: $se-font-family-gotham;
+}
+
+// Typography styles found in mixins.scss
+h1, .h1 {
+  // covers .h1... and h2... selector chains for CKE
+  @include main-title;
+  a {
+    @include text-links;
+  }
+}
+h2, .h2 {
+  @include subtitle;
+  a {
+    @include text-links;
+  }
+}
+h3, .h3 {
+  @include section-title;
+  a {
+    @include text-links;
+  }
+}
+h4, .h4 {
+  @include section-subheading;
+  a {
+    @include text-links;
+  }
+}
+h5, .h5 {
+  @include identifier;
+  a {
+    @include text-links;
+  }
+}
+h6, .h6 {
+  @include not-used;
+  a {
+    @include text-links;
+  }
+}
+blockquote {
+  // default blockquote styles
+  @include blockquote-borders;
+  @include blockquote-text;
+  p{ @include blockquote-text; }
+  &.blockquote {
+      // default blockquote styles
+      @include blockquote-borders;
+      @include blockquote-text;
+      p{ @include blockquote-text; }
+  }
+  //ckeditor testimonial class
+  &.testimonial {
+    // default blockquote styles
+    @include blockquote-testimonial-text;
+    p{ @include blockquote-testimonial-text; }
+    // padding left here matches the :before sizes for font-size, height & width
+    padding: 0 $se-spacing-3 0 $se-spacing-12;
+    &:before {
+      content: '\201C';
+      font-weight: $se-font-weight-bold;
+      font-family:$se-font-family-forza;
+      font-size: $se-font-size-1300;
+      line-height: 1;
+      text-align: center;
+      height:$se-spacing-12;
+      width:$se-spacing-12;
+      color:color($se-blue);
+      top:0;
+      left:0;
+      position: absolute;
+      // background color overrides
+      ////
+      // SHARED SCSS PATTERN
+      ////
+      // define local mixin for adjusting CSS based on component background color
+      // this applies to all background colors sans grey, light grey & white
+      // color specific css changes are nested in their respected background color
+      // css chains if they require specific overrides
+      ////
+      @mixin background-color-adjustments {
+        color:color($se-white);
+      }
+      // background color adjustments
+      .not-black &,
+      .dark-gray &,
+      .blue &,
+      .green &,
+      .yellow &,
+      .orange &,
+      .red &,
+      .purple & {
+        @include background-color-adjustments;
+      }
+      // end background color adjustments
+    }
+  }
+}
+p, .p {
+  @include paragraph-text;
+  &.intro {
+    @include intro-paragraph;
+  }
+
+  &.large {
+    @include large-paragraph;
+  }
+  a {
+    @include text-links;
+  }
+  strong {
+    font-weight: $se-font-weight-bold;
+  }
+  em {
+    font-weight: $se-font-weight-normal;
+  }
+}
+
+.intro {
+  @include intro-paragraph {
+    a {
+      @include text-links;
+    }
+  }
+}
+
+.large {
+  @include large-paragraph {
+    a {
+      @include text-links;
+    }
+  }
+}
+
+// don't expose generic <a> tag to text-links mixin always nest <a> tag scoped inside another HTML tag
+.text-links {
+  @include text-links;
+}
+// here we're targeting a css class to wrap divs that contain a tags which should present themselves as text links
+.text-links-wrapper {
+  a {
+    @include text-links;
+  }
+}
+
+button {
+  width: 80px;
+}

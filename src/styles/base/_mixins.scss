@@ -1,0 +1,640 @@
+@charset "UTF-8";
+
+/* Functions */
+@function rem-calc($size) {
+  $remSize: $size / 16;
+  @return #{$remSize}rem;
+}
+@function color($color, $value: 500) {
+  @return map-get($color, $value);
+}
+@function brightness($color) {
+  @return (red($color) + green($color) + blue($color)) / (255 * 3);
+}
+@function brightness_ratio($base, $color) {
+  @return abs(brightness($base) - brightness($color));
+}
+@function contrast-color($base, $color1: $color-text, $color2: $color-text-light) {
+  @return if(brightness_ratio($base, $color1) > brightness_ratio($base, $color2), $color1, $color2);
+}
+@mixin contrast-color($dark-text: color($se-not-black), $light-text: color($se-white)){
+  .not-black .contrast-content &,
+  .dark-gray .contrast-content &,
+  .blue .contrast-content &,
+  .green .contrast-content &,
+  .yellow .contrast-content &,
+  .orange .contrast-content &,
+  .red .contrast-content &,
+  .purple .contrast-content & {
+    color: $light-text;
+  }
+  .gray .contrast-content &,
+  .light-gray .contrast-content &,
+  .white .contrast-content & {
+    color: $dark-text;
+  }
+}
+@mixin contrast-color-choice($context, $text: color($se-white)){
+  #{$context} .contrast-content & {
+      color: $text;
+  }
+}
+
+/* Mixins */
+@mixin link-colors($normal, $hover: false, $active: false, $visited: false, $focus: false) {
+  color: $normal;
+  @if $visited {
+    &:visited { color: $visited; }
+  }
+  @if $focus {
+    &:focus { color: $focus; }
+  }
+  @if $hover {
+    &:hover { color: $hover; }
+  }
+  @if $active {
+    &:active { color: $active; }
+  }
+}
+
+// typography includes change here to adjust all standard typography styles with optional classes
+@mixin main-title {
+  color: color($se-gray, 700);
+  @include contrast-color($dark-text: color($se-gray, 700));
+  font-family: $se-font-family-forza;
+  font-size: $se-font-size-800;
+  font-weight: $se-font-weight-semi-bold;
+  line-height: $se-spacing-9;
+  margin-bottom: $se-spacing-3;
+  @include font-weight-modifier-classes;
+  @include font-family-modifier-classes;
+  // tablet
+  @include md-small-min {
+    font-size: $se-font-size-h1;
+    line-height: $se-spacing-18;
+  }
+  @content;
+}
+@mixin subtitle {
+  color: color($se-not-black);
+  @include contrast-color;
+  font-family: $se-font-family-gotham;
+  font-size: $se-font-size-h3;
+  font-weight: $se-font-weight-semi-bold;
+  line-height: $se-spacing-8;
+  margin-bottom: $se-spacing-2;
+  @include font-weight-modifier-classes;
+  @include font-family-modifier-classes;
+  // tablet
+  @include md-small-min {
+    font-size: $se-font-size-h2;
+    line-height: $se-spacing-12;
+    margin-bottom: $se-spacing-3;
+  }
+  @content;
+}
+@mixin section-title {
+  color: color($se-not-black);
+  @include contrast-color;
+  font-family: $se-font-family-gotham;
+  font-size: $se-font-size-h4;
+  font-weight: $se-font-weight-semi-bold;
+  line-height: $se-spacing-6;
+  margin-bottom: $se-spacing-3;
+  @include font-weight-modifier-classes;
+  @include font-family-modifier-classes;
+  // tablet
+  @include md-small-min {
+    font-size: $se-font-size-h3;
+    line-height: $se-spacing-8;
+  }
+  @content;
+}
+@mixin section-subheading {
+  color: color($se-not-black);
+  @include contrast-color;
+  font-family: $se-font-family-gotham;
+  font-size: $se-font-size-h5;
+  font-weight: $se-font-weight-semi-bold;
+  line-height: $se-spacing-6;
+  margin-bottom: 0;
+  @include font-weight-modifier-classes;
+  @include font-family-modifier-classes;
+  // tablet
+  @include md-small-min {
+    font-size: $se-font-size-h4;
+  }
+  @content;
+}
+@mixin identifier {
+  color: color($se-gray, 700);
+  @include contrast-color($dark-text: color($se-gray, 700));
+  font-family: $se-font-family-gotham;
+  font-size: $se-font-size-300;
+  font-weight: $se-font-weight-semi-bold;
+  line-height: $se-spacing-6;
+  letter-spacing: $se-letter-spacing-500;
+  margin-bottom: $se-spacing-2;
+  text-transform: uppercase;
+  @include font-weight-modifier-classes;
+  @include font-family-modifier-classes;
+  // tablet
+  @include md-small-min {
+    letter-spacing: $se-letter-spacing-600;
+    font-size: $se-font-size-h5;
+  }
+  @content;
+}
+// applied to H6 tags, same as identifier minus line-spacing & text-transform
+@mixin not-used {
+  color: color($se-gray, 700);
+  @include contrast-color($dark-text: color($se-gray, 700));
+  font-family: $se-font-family-gotham;
+  font-size: $se-font-size-h5;
+  font-weight: $se-font-weight-semi-bold;
+  line-height: $se-spacing-6;
+  margin-bottom: $se-spacing-2;
+  @include font-weight-modifier-classes;
+  @include font-family-modifier-classes;
+  // no mobile styles needed
+  @content;
+}
+@mixin blockquote-borders {
+  border-top: 2px solid color($se-gray, 200);
+  border-bottom: 2px solid color($se-gray, 200);
+}
+@mixin blockquote-text {
+  color: color($se-primary);
+  @include contrast-color($dark-text: color($se-primary));
+  font-family: $se-font-family-forza;
+  font-size: $se-font-size-600;
+  font-weight: $se-font-weight-light;
+  line-height: 1.6 !important;
+  margin-bottom: $se-spacing-9;
+  padding: 0 $se-spacing-3;
+  letter-spacing: normal;
+  text-transform: none;
+  @include font-weight-modifier-classes;
+  @include font-family-modifier-classes;
+  // tablet
+  @include md-small-min {
+    font-size: $se-font-size-800;
+    line-height: $se-spacing-6;
+  }
+  @content;
+}
+@mixin blockquote-testimonial-text {
+  position: relative;
+  color: color($se-gray, 700);
+  @include contrast-color($dark-text: color($se-gray, 700));
+  font-family: $se-font-family-forza;
+  font-size: $se-font-size-600;
+  font-weight: $se-font-weight-light;
+  line-height: 1.6 !important;
+  margin-bottom: $se-spacing-9;
+  padding: 0;
+  letter-spacing: normal;
+  text-transform: none;
+  // reset borders to 0 as testimonial text is used for an instance of a block quote
+  // used specifically with the testimonial component which handles it's own borders
+  border-top:0;
+  border-bottom:0;
+  @include font-weight-modifier-classes;
+  @include font-family-modifier-classes;
+  // tablet
+  @include md-small-min {
+    font-size: $se-font-size-800;
+    line-height: $se-spacing-6;
+  }
+  @content;
+}
+@mixin intro-paragraph {
+  color: color($se-not-black);
+  @include contrast-color;
+  font-family: $se-font-family-gotham;
+  font-size: $se-font-size-500;
+  font-weight: $se-font-weight-semi-bold;
+  line-height: $se-spacing-7;
+  margin-bottom: $se-spacing-6;
+  @include font-weight-modifier-classes;
+  @include font-family-modifier-classes;
+  // tablet
+  @include md-small-min {
+    font-size: $se-font-size-700;
+    line-height: $se-spacing-9;
+  }
+  @content;
+}
+@mixin large-paragraph {
+  color: color($se-not-black);
+  @include contrast-color;
+  font-family: $se-font-family-gotham;
+  font-size: $se-font-size-500;
+  font-weight: $se-font-weight-normal;
+  line-height: $se-spacing-7;
+  margin-bottom: $se-spacing-7;
+  @include font-weight-modifier-classes;
+  @include font-family-modifier-classes;
+  // tablet
+  @include md-small-min {
+    font-size: $se-font-size-600;
+  }
+  @content;
+}
+@mixin paragraph-text {
+  color: color($se-not-black);
+  @include contrast-color;
+  font-family: $se-font-family-gotham;
+  font-size: $se-font-size-400;
+  font-weight: $se-font-weight-normal;
+  line-height: $se-spacing-6;
+  margin-bottom: $se-spacing-6;
+  @include font-weight-modifier-classes;
+  @include font-family-modifier-classes;
+  // mobile same as desktop
+  @content;
+}
+
+@mixin text-links {
+  border-bottom: 2px color($se-yellow) solid;
+  font-weight: $se-font-weight-semi-bold;
+  color: color($se-primary);
+  @include contrast-color($dark-text: color($se-primary));
+  text-decoration: none;
+  transition: border-bottom .5s ease;
+  &:hover {
+    border-bottom: 2px color($se-primary) solid;
+  }
+  @content;
+}
+@mixin read-more-links {
+  color: color($se-blue);
+  text-decoration: none;
+  ////
+  // SHARED SCSS PATTERN - SANS Local Mixin
+  ////
+  // define local mixin for adjusting CSS based on component background color
+  // this applies to all background colors sans grey, light grey & white
+  // color specific css changes are nested in their respected background color classes
+  ////
+  // shared background color adjustments
+  //.not-black &,
+  //.blue &,
+  //.green &,
+  //.yellow &,
+  //.orange &,
+  //.red &,
+  //.purple & {
+  //  @include background-color-adjustments;
+  //}
+  // color specific overrides
+  .blue &,
+  .dark-gray & {
+    color:color($se-yellow);
+  }
+  .green & {
+    color:color($se-white);
+  }
+  .orange & {
+    color:color($se-yellow);
+  }
+  // end background color adjustments
+  @content;
+}
+@mixin font-weight-modifier-classes {
+  &.se-font-weight-light {
+    font-weight: $se-font-weight-light;
+  }
+  &.se-font-weight-normal {
+    font-weight: $se-font-weight-normal;
+  }
+  &.se-font-weight-semi-bold {
+    font-weight: $se-font-weight-semi-bold;
+  }
+  &.se-font-weight-bold {
+    font-weight: $se-font-weight-bold;
+  }
+}
+@mixin font-family-modifier-classes {
+  &.se-font-family-gotham {
+    font-family: $se-font-family-gotham;
+  }
+  &.se-font-family-forza {
+    font-family: $se-font-family-forza;
+  }
+}
+
+// shared ui & form element styles
+@mixin hr {
+  height: 2px;
+  background: color($se-gray);
+  width: 100%;
+  border: 0;
+  margin: 0;
+  @content;
+}
+@mixin button {
+  @include large-paragraph {
+    border: 2px solid;
+    border-radius: $se-spacing-2;
+    padding: $se-spacing-2 $se-spacing-6;
+    margin: 0;
+    display: inline-block;
+  }
+  &.primary {
+    // single '&' targets the default '.primary' class as we want to group the default style
+    // for this button with coverage for font style utility classes
+    &,
+    .gray &,
+    .light-gray &,
+    .white & {
+      color: color($se-white);
+      border-color:color($se-green);
+      background-color:color($se-green);
+    }
+    .green & {
+      color:color($se-white);
+      border-color:color($se-blue);
+      background-color:color($se-blue);
+    }
+    @include elevation-clickable-button;
+    &:hover {
+      @include elevation-active-hover;
+    }
+  }
+  &.secondary {
+    // single '&' targets the default '.secondary' class as we want group the default style
+    // for this button with background color utility classes
+    &,
+    .gray &,
+    .light-gray &,
+    .white & {
+      color: color($se-not-black);
+      border-color: color($se-not-black);
+      background-color: transparent;
+    }
+    .not-black &,
+    .dark-gray &,
+    .blue &,
+    .green &,
+    .yellow &,
+    .orange &,
+    .red &,
+    .purple & {
+      color: color($se-white);
+      border-color: color($se-white);
+      background-color: transparent;
+    }
+  }
+}
+
+// text color class mixin
+@mixin text-color {
+  &.not-black {
+    color: color($se-not-black);
+  }
+  &.dark-gray {
+    color: color($se-dark-gray);
+  }
+  &.gray {
+    color: color($se-gray);
+  }
+  &.light-gray {
+    color: color($se-light-gray);
+  }
+  &.white {
+    color: color($se-white);
+  }
+  &.blue {
+    color: color($se-blue);
+  }
+  &.green {
+    color: color($se-green);
+  }
+  &.yellow {
+    color: color($se-yellow);
+  }
+  &.orange {
+    color: color($se-orange);
+  }
+  &.red {
+    color: color($se-red);
+  }
+  &.purple {
+    color: color($se-purple);
+  }
+}
+
+// background color class mixins
+// correlates with field_background_color
+@mixin background-color {
+  &.not-black {
+    background-color:color($se-not-black);
+  }
+  &.dark-gray {
+    background-color:color($se-dark-gray);
+  }
+  &.gray {
+    background-color:color($se-gray);
+  }
+  &.light-gray {
+    background-color:color($se-light-gray);
+  }
+  &.white {
+    background-color:color($se-white);
+  }
+  &.blue {
+    background-color:color($se-blue);
+  }
+  &.green {
+    background-color:color($se-green);
+  }
+  &.yellow {
+    background-color:color($se-yellow);
+  }
+  &.orange {
+    background-color:color($se-orange);
+  }
+  &.red {
+    background-color:color($se-red);
+  }
+  &.purple {
+    background-color:color($se-purple);
+  }
+}
+
+// classes here need to stay in sync with CKEditor classes applied through Drupal configuration
+@mixin ckeditor-classes {
+  .h1, .h2, .h3, .h4, .h5, .h6, .intro, .large, .p, .blockquote, .text-links, .button, .primary, .secondary, .testimonial  {
+    @content;
+  }
+}
+@mixin direct-ckeditor-classes {
+  > .h1, > .h2, > .h3, > .h4, > .h5, > .h6, > .intro, > .large, > .p, > .blockquote, > .text-links, > .button, > .primary, > .secondary, > .testimonial {
+    @content;
+  }
+}
+
+// a running list of tags to apply styles to rather than obliterating everything with a *
+// creates a large chunk of CSS
+// in theory this is more performant that blasting everything w/ a *
+@mixin html-tags {
+  // classes defined correlate with the CKE settings in drupal
+  div, span, applet, object, iframe,
+  h1, h2, h3, h4, h5, h6, p, blockquote, q, pre,
+  a, abbr, acronym, address, big, cite, code,
+  del, dfn, em, img, ins, kbd, q, s, samp,
+  small, strike, strong, sub, sup, tt, var,
+  b, u, i, center,
+  dl, dt, dd, ol, ul, li,
+  fieldset, form, label, legend,
+  table, caption, table, tbody, tfoot, thead, tr, th, td,
+  article, aside, canvas, details, embed,
+  figure, figcaption, footer, header, hgroup, main,
+  menu, nav, output, ruby, section, summary,
+  time, mark, audio, video, button {
+    @content;
+  }
+}
+@mixin direct-html-tags {
+  // classes defined correlate with the CKE settings in drupal
+  > div, > span, > applet, > object, > iframe,
+  > h1, > h2, > h3, > h4, > h5, > h6, > p, > blockquote, > q, > pre,
+  > a, > abbr, > acronym, > address, > big, > cite, > code,
+  > del, > dfn, > em, > img, > ins, > kbd, > q, > s, > samp,
+  > small, > strike, > strong, > sub, > sup, > tt, > var,
+  > b, > u, > i, > center,
+  > dl, > dt, > dd, > ol, > ul, > li,
+  > fieldset, > form, > label, > legend,
+  > table, > caption, > table, > tbody, > tfoot, > thead, > tr, > th, > td,
+  > article, > aside, > canvas, > details, > embed,
+  > figure, > figcaption, > footer, > header, > hgroup, > main,
+  > menu, > nav, > output, > ruby, > section, > summary,
+  > time, > mark, > audio, > video, > button {
+    @content;
+  }
+}
+
+// combine tags & classes both direct & ancestors
+@mixin html-tags-and-ckeditor-classes {
+  @include html-tags {
+    @content;
+  }
+  @include ckeditor-classes {
+    @content;
+  }
+}
+@mixin direct-html-tags-and-ckeditor-classes {
+  @include direct-html-tags {
+    @content;
+  }
+  @include direct-ckeditor-classes {
+    @content;
+  }
+}
+
+// reset mixins
+@mixin reset-list-styles {
+  ol, ul, li {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    vertical-align: baseline;
+  }
+  ol, ul {
+    list-style: none;
+  }
+}
+
+/* elevation states */
+// no elevation
+@mixin elevation-none {
+  box-shadow: none;
+  transition: none;
+}
+// elevation states: interactions
+@mixin elevation-not-active {
+  box-shadow: 0px 1px 1px 0px rgba(0,0,0,.3);
+  transition: box-shadow 300ms;
+  @content;
+}
+@mixin elevation-clickable-button {
+  box-shadow: 0px 1px 3px 0px rgba(35,40,43,.3), 0px 4px 6px 1px rgba(35,40,43,.2);
+  transition: box-shadow 300ms;
+  @content;
+}
+@mixin elevation-clickable-card {
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12);
+  transition: box-shadow .2s linear, top .2s linear;
+  @content;
+}
+@mixin elevation-clickable-card-hover {
+  box-shadow: -4px 5px 2px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  transition: box-shadow 300ms;
+  @content;
+}
+@mixin elevation-active-hover {
+  box-shadow: 0px 1px 3px 0px rgba(35,40,43,.3), 0px 12px 16px 2px rgba(35,40,43,.2);
+  transition: box-shadow 300ms;
+  @content;
+}
+// elevation states: elements
+@mixin elevation-resting-container {
+  box-shadow: 0px 1px 3px 0px rgba(0,0,0,.3), 0px 1px 3px 0px rgba(35,40,43,.2);
+  transition: box-shadow 300ms;
+  @content;
+}
+// elevation states: controls
+@mixin elevation-active-control {
+  box-shadow: 0px 1px 3px 0px rgba(35,40,43,.3), 0px 4px 6px 1px rgba(35,40,43,.2);
+  transition: box-shadow 300ms;
+  @content;
+}
+@mixin elevation-hover-active-control {
+  box-shadow: 0px 1px 3px 0px rgba(35,40,43,.3), 0px 6px 13px 1px rgba(35,40,43,.2);
+  transition: box-shadow 300ms;
+  @content;
+}
+@mixin elevation-hover-control {
+  box-shadow: 0px 1px 3px 0px rgba(35,40,43,.3), 0px 8px 20px 4px rgba(35,40,43,.2);
+  transition: box-shadow 300ms;
+  @content;
+}
+@mixin elevation-inactive-control {
+  box-shadow: 0px 1px 1px 0px rgba(0,0,0,.3);
+  transition: box-shadow 300ms;
+  @content;
+}
+// levels
+@mixin elevation-level-3 {
+  box-shadow: 0px 3px 3px 0px rgba(0,0,0,.14), 0px 3px 4px 0px rgba(0,0,0,.12), 0px 1px 8px 0px rgba(0,0,0,.2);
+  transition: box-shadow 300ms;
+  @content;
+}
+
+// component mixins
+@mixin component-padding {
+  padding-top: $se-spacing-15;
+  padding-bottom: $se-spacing-15;
+  @include md-small {
+    padding-bottom: $se-spacing-9;
+  }
+  @include md-xsmall {
+    padding-top: $se-spacing-12;
+    padding-bottom: $se-spacing-6;
+  }
+}
+@mixin ckeditor-fixes {
+  .body {
+    // accomodate for field wrapping CKE editor content in a classless div
+    > div {
+      @include direct-html-tags {
+        &:last-child {
+          margin-bottom:0 !important;
+        }
+      }
+    }
+  }
+}

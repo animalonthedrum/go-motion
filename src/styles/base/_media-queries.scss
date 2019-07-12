@@ -1,0 +1,133 @@
+@charset "UTF-8";
+
+// --------------------------------
+//  MEDIA QUERIES
+// --------------------------------
+// Breakpoints based on Material Design 'Window' specifications 11/2/18
+//
+// xsmall range
+$md-xsmall-min: 0rem;             // 0px
+$md-xsmall-max: 37.4375rem;       // 599px
+// xsmall 1
+$md-xsmall-1-min: $md-xsmall-min; // 0px
+$md-xsmall-1-max: 22.4375rem;     // 359px
+// xsmall 2
+$md-xsmall-2-min: 22.5rem;        // 360px
+$md-xsmall-2-max: 24.9375rem;     // 399px
+// xsmall 3
+$md-xsmall-3-min: 25rem;          // 400px
+$md-xsmall-3-max: 29.9375rem;     // 479px
+// xsmall 4
+$md-xsmall-4-min: 30rem;          // 480px
+$md-xsmall-4-max: $md-xsmall-max; // 599px
+// small range
+$md-small-min: 37.5rem;           // 600px
+$md-small-max: 63.9375rem;        // 1023px
+// small 1
+$md-small-1-min: $md-small-min;   // 600px
+$md-small-1-max: 44.9375rem;      // 719px
+// small 2
+$md-small-2-min: 45rem;           // 720px
+$md-small-2-max: 52.4375rem;      // 839px
+// small 3
+$md-small-3-min: 52.5rem;         // 840px
+$md-small-3-max: 59.9375rem;      // 959px
+// small 4
+$md-small-4-min: 60rem;           // 960px
+$md-small-4-max: $md-small-max;   // 1023px
+// medium range
+$md-medium-min: 64rem;            // 1024px
+$md-medium-max: 89.9375rem;       // 1439px
+// medium 1
+$md-medium-1-min: $md-medium-min; // 1024px
+$md-medium-1-max: 79.9375rem;     // 1279px
+// medium 2
+$md-medium-2-min: 80rem;          // 1280px
+$md-medium-2-max: $md-medium-max; // 1439px
+// large range
+$md-large-min: 90rem;             // 1440px
+$md-large-max: 119.9375rem;       // 1919px
+// large 1
+$md-large-1-min: $md-large-min;   // 1440px
+$md-large-1-max: 99.9375rem;      // 1599px
+// large 2
+$md-large-2-min: 100rem;          // 1600px
+$md-large-2-max: $md-large-max;   // 1919px
+// xlarge min
+$md-xlarge-min: 120rem;           // 1920px
+
+// Media Queries
+/*------------------------------------------
+	mobile: 0-599px
+	tablet: 600-1023px
+	desktop: 1024-1439px
+	desktop-large: 1440-1919px
+	desktop-xlarge: 1920+px
+*/
+//(0+px)
+@mixin md-xsmall {
+  @media (max-width: $md-xsmall-max) {
+    @content;
+  }
+}
+@mixin md-small {
+  @media(min-width: $md-small-min) and (max-width: $md-small-max) {
+    @content;
+  }
+}
+//(600+px)
+@mixin md-small-min {
+  @media(min-width: $md-small-min) {
+    @content;
+  }
+}
+@mixin md-small-max {
+  @media(max-width: $md-small-max) {
+    @content;
+  }
+}
+@mixin md-medium {
+  @media(min-width: $md-medium-min) and (max-width: $md-medium-max) {
+    @content;
+  }
+}
+//(1024+px)
+@mixin md-medium-min {
+  @media(min-width: $md-medium-min) {
+    @content;
+  }
+}
+@mixin md-medium-max {
+  @media(max-width: $md-medium-max) {
+    @content;
+  }
+}
+@mixin md-large {
+  @media(min-width: $md-large-min) and (max-width: $md-large-max) {
+    @content;
+  }
+}
+//(1440+px)
+@mixin md-large-min {
+  @media(min-width: $md-large-min) {
+    @content;
+  }
+}
+//(1920+px)
+@mixin md-xlarge {
+  @media(min-width: $md-xlarge-min) {
+    @content;
+  }
+}
+//(0-719px)
+@mixin gutter-small {
+  @media(max-width: $md-small-1-max) {
+    @content;
+  }
+}
+//(720+px)
+@mixin gutter-medium {
+  @media(min-width: $md-small-2-min) {
+    @content;
+  }
+}
