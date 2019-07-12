@@ -1,12 +1,24 @@
 nav {
     max-width: 1260px;
     margin:0 auto;
+    padding-left: 15px;
+    padding-right: 15px;
     display: flex;
     height: 60px;
     align-items: center;
     background-color: color($se-purple);
     .brand {
         flex: 1;
+        svg {
+            max-width: 150px;
+            max-height: 25px;
+            .st1 {
+                fill:color($se-white);
+            }
+            .st0{
+                fill: color($se-yellow);
+            }
+        }
     }
     ul {
         margin-left: 0;
@@ -18,8 +30,8 @@ nav {
         padding-top: 0;
         margin-bottom: 0;
         &.dropdown {
-            padding-right: 15px;
-            padding-left: 15px;
+            padding-right: 0;
+            padding-left: 30px;
             height: 100%;
         }
         &.dropdown-menu {
@@ -35,7 +47,6 @@ nav {
         li {
             list-style: none;
             margin-bottom: 0;
-            // padding-left: 12px;
             a {
                 display: block;
                 text-decoration: none;
