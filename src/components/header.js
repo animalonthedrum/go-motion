@@ -10,13 +10,6 @@ const Header = ({ siteTitle }) => (
       marginBottom: `1.45rem`,
     }}
   >
-    {/* <div
-      style={{
-        margin: `0 auto`,
-        // maxWidth: 960,
-        padding: `1.45rem 1.0875rem`,
-      }}
-    > */}
     <nav>
         <Link
           to="/"

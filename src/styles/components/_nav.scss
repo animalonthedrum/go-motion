@@ -88,6 +88,9 @@ nav {
             display: flex;
             align-items: center;
             height: 100%;
+            &:hover {
+                cursor: pointer;
+              }
             svg {
                 margin-left: 5px;
                 transition: transform 300ms linear;
@@ -113,5 +116,8 @@ nav {
             }
 
         }
+    }
+    .mobile-toggle {
+        // display: none;
     }
 }

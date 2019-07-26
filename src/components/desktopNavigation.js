@@ -1,6 +1,7 @@
 import { Link } from "gatsby"
 import React from "react"
 import Dropdown from "./dropdown"
+import MobileNavigation from './mobileNavigation';
 
 
 function DesktopNavigation() {
@@ -47,6 +48,7 @@ function DesktopNavigation() {
             pages={[<Link to="/contact">Contact Form</Link>]}//end of pages
           />
           {/* <Link to='/contact' >Contact</Link> */}
+          <MobileNavigation/>
         </nav>
       </header>
     )
